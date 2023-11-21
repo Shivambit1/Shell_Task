@@ -1,22 +1,23 @@
-Task 1: Comments
+**Task 1: **Comments**
 In bash scripts, comments are used to add explanatory notes or disable certain lines of code. Your task is to create a bash script with comments explaining what the script does.
 
-Task 2: Echo
+* Task 2: Echo
 The echo command is used to display messages on the terminal. Your task is to create a bash script that uses echo to print a message of your choice.
 
-Task 3: Variables
+* Task 3: Variables
 Variables in bash are used to store data and can be referenced by their name. Your task is to create a bash script that declares variables and assigns values to them.
 
-Task 4: Using Variables
+* Task 4: Using Variables
 Now that you have declared variables, let's use them to perform a simple task. Create a bash script that takes two variables (numbers) as input and prints their sum using those variables.
 
-Task 5: Using Built-in Variables
+* Task 5: Using Built-in Variables
 Bash provides several built-in variables that hold useful information. Your task is to create a bash script that utilizes at least three different built-in variables to display relevant information.
 
-Task 6: Wildcards
+* Task 6: Wildcards
 Wildcards are special characters used to perform pattern matching when working with files. Your task is to create a bash script that utilizes wildcards to list all the files with a specific extension in a directory.
 
 ==============================================================
+CODE :-
 
 #! /bin/bash
 
@@ -43,3 +44,16 @@ echo "My hostname - $HOSTNAME"
 # Task  6: Wildcards
 echo "Files with .txt extension in the current directory:"
 ls *.txt
+
+OUTPUT :-
+
+Scripting is fun as per pratice
+Hello, Bash! Welcome to the world of Bash scripting!
+My current bash path - /bin/bash
+Bash version I am using - 3.2.57(1)-release
+PID of bash I am running - 29555
+My home directory - /Users/shivampandey
+Where am I currently? - /Users/shivampandey/Shell_task
+My hostname - FVFZ8APDDD
+Files with .txt extension in the current directory:
+ls: *.txt: No such file or directory
