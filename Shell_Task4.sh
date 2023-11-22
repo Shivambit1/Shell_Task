@@ -67,3 +67,92 @@ while [ $attempt -le $max_attempts ]; do
 done
 
 echo "Maximum restart attempts reached. Please check the process manually."
+
+
+
+
+Task Set 2 -
+
+Task 1: Implementing Basic Metrics Monitoring
+Write a Bash script that monitors the CPU usage, memory usage, and disk space usage of the system. The script should display these metrics in a clear and organized manner, allowing users to interpret the data easily. The script should use the top, free, and df commands to fetch the metrics.
+
+Task 2: User-Friendly Interface
+Enhance the script by providing a user-friendly interface that allows users to interact with the script through the terminal. Display a simple menu with options to view the metrics and an option to exit the script.
+
+Task 3: Continuous Monitoring with Sleep
+Introduce a loop in the script to allow continuous monitoring until the user chooses to exit. After displaying the metrics, add a "sleep" mechanism to pause the monitoring for a specified interval before displaying the metrics again. Allow the user to specify the sleep interval.
+
+Task 4: Monitoring a Specific Service (e.g., Nginx)
+Extend the script to monitor a specific service like Nginx. Check if the service is running and display its status. If it is not running, provide an option for the user to start the service. Use the systemctl or appropriate command to check and control the service.
+
+Task 5: Allow User to Choose a Different Service
+Modify the script to give the user the option to monitor a different service of their choice. Prompt the user to enter the name of the service they want to monitor, and display its status accordingly.
+
+Task 6: Error Handling
+Implement error handling in the script to handle scenarios where commands fail or inputs are invalid. Display meaningful error messages to guide users on what went wrong and how to fix it.
+
+
+CODE -
+
+#!/bin/bash
+
+# Function to display system metrics (CPU, memory, disk space)
+function view_system_metrics() {
+    echo "---- System Metrics ----"
+    # Fetch CPU usage using `top` command and extract the value using awk
+    cpu_usage=$(top -bn 1 | grep '%Cpu' | awk '{print $2}')
+    # Fetch memory usage using `free` command and extract the value using awk
+    mem_usage=$(free | grep Mem | awk '{printf("%.1f", $3/$2 * 100)}')
+    # Fetch disk space usage using `df` command and extract the value using awk
+    disk_usage=$(df -h / | tail -1 | awk '{print $5}')
+    
+    echo "CPU Usage:  $cpu_usage%   Mem Usage:  $mem_usage%   Disk Space:  $disk_usage"
+}
+
+# Function to monitor a specific service
+function monitor_service() {
+    echo "---- Monitor a Specific Service ----"
+    read -p "Enter the name of the service to monitor: " service_name
+
+    # Check if the service is running using `systemctl` command
+    if systemctl is-active --quiet $service_name; then
+        echo "$service_name is running."
+    else
+        echo "$service_name is not running."
+        read -p "Do you want to start $service_name? (Y/N): " choice
+        if [ "$choice" = "Y" ] || [ "$choice" = "y" ]; then
+            # Start the service using `systemctl` command
+            systemctl start $service_name
+            echo "$service_name started successfully."
+        fi
+    fi
+}
+
+# Main loop for continuous monitoring
+while true; do
+    echo "---- Monitoring Metrics Script ----"
+    echo "1. View System Metrics"
+    echo "2. Monitor a Specific Service"
+    echo "3. Exit"
+
+    read -p "Enter your choice (1, 2, or 3): " choice
+
+    case $choice in
+        1)
+            view_system_metrics
+            ;;
+        2)
+            monitor_service
+            ;;
+        3)
+            echo "Exiting the script. Goodbye!"
+            exit 0
+            ;;
+        *)
+            echo "Error: Invalid option. Please choose a valid option (1, 2, or 3)."
+            ;;
+    esac
+
+    # Sleep for 5 seconds before displaying the menu again
+    sleep 5
+done
